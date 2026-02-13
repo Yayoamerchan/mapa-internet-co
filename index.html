@@ -417,48 +417,59 @@
         </script>        
     
         <style>
-            .map-title-card { position: absolute; top: 10px; left: 55px; z-index: 1001; background: white; padding: 8px 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); border: 1px solid #1976D2; pointer-events: none; }
+            /* Título Superior */
+            .map-title-card { 
+                position: absolute; top: 10px; left: 55px; z-index: 1001; 
+                background: white; padding: 8px 15px; border-radius: 8px; 
+                box-shadow: 0 2px 6px rgba(0,0,0,0.3); border: 1px solid #1976D2; 
+                pointer-events: none;
+            }
             .map-title-card h2 { margin: 0; font-size: 14px; color: #1976D2; font-family: sans-serif; text-transform: uppercase; }
-            #filtros-panel { position: absolute; bottom: 30px; right: 10px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.2); z-index: 1000; width: 210px; font-family: sans-serif; border: 1px solid #ccc; }
-            .filtro-item { display: flex; align-items: center; font-size: 11px; margin-bottom: 5px; cursor: pointer; }
-            #btn-aplicar { width: 100%; margin-top: 8px; cursor: pointer; background: #1976D2; color: white; border: none; padding: 7px; border-radius: 4px; font-weight: bold; }
-            #cant-mun { font-weight: bold; color: #1976D2; }
+
+            /* Botón para mostrar/ocultar filtros */
+            #toggle-filtros {
+                position: absolute; bottom: 20px; right: 20px; z-index: 1002;
+                background: #1976D2; color: white; border: none; border-radius: 50%;
+                width: 50px; height: 50px; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+                display: flex; align-items: center; justify-content: center; font-size: 20px;
+            }
+
+            /* Panel de Filtros */
+            #filtros-panel { 
+                position: absolute; bottom: 80px; right: 20px; background: white; 
+                padding: 15px; border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.2); 
+                z-index: 1000; width: 220px; font-family: sans-serif; border: 1px solid #ccc;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+            }
+            #filtros-panel.oculto { transform: translateY(20px); opacity: 0; pointer-events: none; }
             
-            /* --- DISEÑO DE POPUP OPTIMIZADO --- */
-            .leaflet-popup-content-wrapper { 
-                padding: 0; 
-                overflow: hidden; 
-                border-radius: 10px; 
-                width: 350px !important; /* Más ancho */
+            .filtro-item { display: flex; align-items: center; font-size: 12px; margin-bottom: 6px; cursor: pointer; }
+            #btn-aplicar { 
+                width: 100%; margin-top: 10px; cursor: pointer; background: #1976D2; 
+                color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; 
             }
-            .leaflet-popup-content { 
-                margin: 0 !important; 
-                width: 350px !important; 
+            
+            /* Popups */
+            .leaflet-popup-content-wrapper { padding: 0; overflow: hidden; border-radius: 10px; width: 350px !important; }
+            .leaflet-popup-content { margin: 0 !important; width: 350px !important; }
+            .popup-header { background: #1976D2; color: white; padding: 10px 15px; font-weight: bold; font-size: 14px; }
+            .popup-body { padding: 12px; font-size: 13px; max-height: 300px; overflow-y: auto; }
+
+            /* RESPONSIVE */
+            @media (max-width: 600px) {
+                .map-title-card { left: 10px; width: calc(100% - 80px); padding: 5px; }
+                .map-title-card h2 { font-size: 11px; }
+                #filtros-panel { width: calc(100% - 60px); right: 30px; bottom: 85px; }
+                .leaflet-popup-content-wrapper, .leaflet-popup-content { width: 280px !important; }
             }
-            .popup-header { 
-                background: #1976D2; 
-                color: white; 
-                padding: 8px 15px; 
-                font-weight: bold; 
-                font-size: 14px; 
-                border-bottom: 2px solid #1565C0;
-            }
-            .popup-body { 
-                padding: 12px; 
-                font-size: 13px; 
-                line-height: 1.5; 
-                max-height: 350px; /* Más espacio para el scroll */
-                overflow-y: auto;  /* Habilita el scroll solo aquí */
-                color: #333;
-            }
-            /* Estilo tablas dentro del popup */
-            .popup-body table { width: 100%; border-collapse: collapse; }
-            .popup-body td { padding: 4px 0; border-bottom: 1px solid #eee; }
         </style>
 
         <div class="map-title-card"><h2>Análisis de Internet - Colombia</h2></div>
-        <div id="filtros-panel">
-            <h4 style="margin:0 0 10px 0; font-size:12px;">🔍 Filtro por Tamaño</h4>
+        
+        <button id="toggle-filtros" title="Filtros">🔍</button>
+        
+        <div id="filtros-panel" class="oculto">
+            <h4 style="margin:0 0 10px 0; font-size:13px; text-align:center;">🔍 Filtro por Tamaño</h4>
             <label class="filtro-item"><input type="checkbox" class="chk-t" value="todos" checked> <b>MOSTRAR TODOS</b></label>
             <label class="filtro-item"><input type="checkbox" class="chk-t" value="Gigante"> 🔴 Gigante</label>
             <label class="filtro-item"><input type="checkbox" class="chk-t" value="Muy_Grande"> 🟠 Muy Grande</label>
@@ -468,40 +479,44 @@
             <label class="filtro-item"><input type="checkbox" class="chk-t" value="Pequeña"> 🟡 Pequeña</label>
             <label class="filtro-item"><input type="checkbox" class="chk-t" value="Micro"> ⚪ Micro</label>
             <button id="btn-aplicar">ACTUALIZAR VISTA</button>
-            <div style="font-size:10px; margin-top:8px; text-align:center;">Municipios: <span id="cant-mun">0</span></div>
+            <div style="font-size:11px; margin-top:10px; text-align:center; border-top: 1px solid #eee; padding-top:5px;">
+                Municipios: <span id="cant-mun" style="font-weight:bold; color:#1976D2;">0</span>
+            </div>
         </div>
 
         <script id="mejora-script">
-        function inicializarTodo() {
+        function inicializarPro() {
             var capa = window['layer_CantAccesosNet_1'];
-            if (!capa) { setTimeout(inicializarTodo, 500); return; }
+            if (!capa) { setTimeout(inicializarPro, 500); return; }
 
-            // RECONSTRUIR POPUPS
+            // 1. Mostrar/Ocultar Panel
+            var btnToggle = document.getElementById('toggle-filtros');
+            var panel = document.getElementById('filtros-panel');
+            btnToggle.onclick = function() {
+                panel.classList.toggle('oculto');
+                btnToggle.innerText = panel.classList.contains('oculto') ? '🔍' : '❌';
+            };
+
+            // 2. Reconstruir Popups y Hover
             capa.eachLayer(function(l) {
                 var p = l.feature.properties;
                 var nombre = p['MpNombre'] || "Municipio";
                 var htmlContent = p['Popup_HTML'] || "Sin datos";
                 
-                // Creamos estructura limpia
                 var container = document.createElement('div');
                 container.innerHTML = `<div class="popup-header">${nombre}</div><div class="popup-body">${htmlContent}</div>`;
                 
-                l.bindPopup(container, { 
-                    maxWidth: 350, 
-                    minWidth: 350,
-                    className: 'custom-popup-frame'
-                });
+                l.bindPopup(container, { maxWidth: 350, minWidth: 250 });
                 
-                l.on('mouseover', function(e) {
+                l.on('mouseover', function() {
                     if (this.options.interactive) {
-                        this.setStyle({ color: 'yellow', weight: 4, fillOpacity: 0.9 });
+                        this.setStyle({ color: 'yellow', weight: 4, fillOpacity: 0.8 });
                     }
                 });
-                l.on('mouseout', function(e) {
-                    capa.resetStyle(this);
-                });
+                l.on('mouseout', function() { capa.resetStyle(this); });
             });
 
+            // 3. Filtro Anti-Fantasmas
             function ejecutarFiltro() {
                 var seleccionados = Array.from(document.querySelectorAll('.chk-t:checked')).map(c => c.value);
                 var verTodos = seleccionados.includes('todos');
@@ -535,10 +550,12 @@
                     }
                 });
                 document.getElementById('cant-mun').innerText = contador;
+                if(window.innerWidth < 600) panel.classList.add('oculto'); // Auto-cerrar en móvil
             }
 
             document.getElementById('btn-aplicar').onclick = ejecutarFiltro;
             
+            // Lógica Checkboxes
             document.querySelectorAll('.chk-t').forEach(i => {
                 i.onchange = function() {
                     if(this.value === 'todos' && this.checked) {
@@ -551,7 +568,7 @@
 
             ejecutarFiltro();
         }
-        window.addEventListener('load', function() { setTimeout(inicializarTodo, 1000); });
+        window.addEventListener('load', function() { setTimeout(inicializarPro, 1000); });
         </script>
         </body>
 </html>
