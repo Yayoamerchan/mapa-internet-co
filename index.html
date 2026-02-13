@@ -22,34 +22,23 @@
         .map-title-card h2 { margin: 0; font-size: 16px; font-family: 'Segoe UI', sans-serif; color: #1976D2; text-transform: uppercase; }
         #filtros-panel {
             position: absolute; bottom: 20px; right: 10px; background: rgba(255, 255, 255, 0.95);
-            padding: 6px 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;
-            width: 180px; font-family: 'Segoe UI', sans-serif;
+            padding: 8px 12px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;
+            width: 190px; font-family: 'Segoe UI', sans-serif;
         }
-        .filtro-categoria { margin: 1px 0; padding: 1px 3px; font-size: 10px; cursor: pointer; display: flex; align-items: center; }
-        #aplicar-filtros { width: 100%; padding: 4px; background: #1976D2; color: white; border: none; border-radius: 4px; margin-top: 5px; cursor: pointer; font-weight: bold; font-size: 10px; }
-        .custom-popup .leaflet-popup-content-wrapper { border-radius: 8px; padding: 0; overflow: hidden; }
-        .popup-header { background: #1976D2; color: white; padding: 8px 12px; font-weight: bold; font-size: 13px; }
-        .popup-body { padding: 10px; font-size: 12px; max-height: 250px; overflow-y: auto; }
+        .filtro-categoria { margin: 1px 0; padding: 2px 4px; font-size: 10.5px; cursor: pointer; display: flex; align-items: center; }
+        #aplicar-filtros { width: 100%; padding: 5px; background: #1976D2; color: white; border: none; border-radius: 4px; margin-top: 6px; cursor: pointer; font-weight: bold; font-size: 11px; }
         </style>
         
         <title></title>
     </head>
-    
-    <body>
-        <div class="map-title-card"><h2>Análisis de Internet - CO</h2></div>
-        <div id="filtros-panel">
-            <h4>🔍 Filtro por Tamaño</h4>
-            <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="todos" checked> <b>MOSTRAR TODOS</b></label>
-            <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Gigante">🔴 Gigante</label>
-            <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Muy_Grande">🟠 Muy Grande</label>
-            <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Grande">🟠 Grande</label>
-            <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Mediana_Alta">🟢 Mediana Alta</label>
-            <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Mediana_Baja">🟢 Mediana Baja</label>
-            <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Pequeña">🟡 Pequeña</label>
-            <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Micro">⚪ Micro</label>
-            <button id="aplicar-filtros">ACTUALIZAR VISTA</button>
-            <div style="font-size:9px; color:#666; margin-top:3px; text-align:center;">Municipios visibles: <span id="num-visible">0</span></div>
-        </div>
+    <body><div class="map-title-card"><h2>Análisis de Internet - CO</h2></div>
+            <div id="filtros-panel">
+                <h4>🔍 Filtro por Tamaño</h4>
+                <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="todos" checked> <b>MOSTRAR TODOS</b></label>
+                <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Pequeña">🟡 Pequeña</label>
+                <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Micro">⚪ Micro</label>
+                <button id="aplicar-filtros">ACTUALIZAR VISTA</button>
+            </div>
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -417,37 +406,6 @@
                 }, 500);
             }  
         });       
-        
-        function pop_Mun_Telcos_NETBPorAccesosTotales_1_MEJORADO(feature, layer) {
-            var htmlContent = feature.properties['Popup_HTML'] || 'Sin datos';
-            layer.bindPopup(`<div class="popup-header">${feature.properties['MpNombre'] || "Detalle"}</div><div class="popup-body">${htmlContent}</div>`, { maxHeight: 400, maxWidth: 350, className: 'custom-popup' });
-            layer.on({
-                mouseout: function(e) { if (e.target.options.fillOpacity !== 0) { for (var i in e.target._eventParents) { if (typeof e.target._eventParents[i].resetStyle === 'function') e.target._eventParents[i].resetStyle(e.target); } } },
-                mouseover: function(e) { if (e.target.options.fillOpacity !== 0) { highlightFeature(e); } },
-            });
-        }
-        layer_Mun_Telcos_NETBPorAccesosTotales_1.eachLayer(function(l) { pop_Mun_Telcos_NETBPorAccesosTotales_1_MEJORADO(l.feature, l); });
-        (function() {
-            var checks = document.querySelectorAll('.filtro-tamano');
-            var btn = document.getElementById('aplicar-filtros');
-            function filtrar() {
-                var seleccionados = Array.from(checks).filter(c => c.checked && c.value !== 'todos').map(c => c.value);
-                var verTodos = document.querySelector('.filtro-tamano[value="todos"]').checked;
-                var total = 0;
-                layer_Mun_Telcos_NETBPorAccesosTotales_1.eachLayer(function(l) {
-                    var visible = verTodos;
-                    if (!verTodos) { seleccionados.forEach(t => { if (l.feature.properties['Num_' + t] > 0) visible = true; }); }
-                    l.setStyle({ fillOpacity: visible ? 1 : 0, opacity: visible ? 1 : 0, interactive: visible });
-                    if (visible) total++;
-                });
-                document.getElementById('num-visible').textContent = total;
-            }
-            btn.onclick = filtrar;
-            document.querySelector('.filtro-tamano[value="todos"]').onchange = function() { if(this.checked) checks.forEach(c => { if(c.value !== 'todos') c.checked = false; }); filtrar(); };
-            checks.forEach(c => { c.onchange = function() { if(this.checked && this.value !== 'todos') document.querySelector('.filtro-tamano[value="todos"]').checked = false; filtrar(); }; });
-            setTimeout(filtrar, 800);
-        })();
-        
         setBounds();
         </script>        
     </body>
