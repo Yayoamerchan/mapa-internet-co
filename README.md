@@ -40,5 +40,38 @@ Si realizas cambios en QGIS y necesitas actualizar el sitio:
 ![Vista previa del mapa](screenshot_1.png)
 
 
+## 💻 Comandos de Git (Guía Rápida)
+
+Si necesitas gestionar los archivos entre tu PC y GitHub, estos son los comandos esenciales:
+
+### 1. Traer cambios desde GitHub al local (Descargar)
+Si hiciste cambios directamente en la web de GitHub o alguien más subió archivos:
+```bash
+git pull origin main
+
+Subir cambios del local a GitHub (Publicar)
+Después de ejecutar el script de Python y verificar que todo está bien:
+
+# Añadir todos los cambios al área de preparación
+git add .
+
+# Crear el paquete con un mensaje descriptivo
+git commit -m "Mejora: Popups responsive y botón de filtros"
+
+# Subir a la nube
+git push origin main
+
+3. Otros comandos útiles
+git status: Ver qué archivos han cambiado.
+
+git clone [URL]: Descargar el repositorio completo por primera vez.
+
+---
+
+### ¿Cómo actualizar tu local ahora mismo?
+
+1.  Abre tu terminal o consola en la carpeta del proyecto.
+2.  Escribe: `git pull origin main`.
+3.  ¡Listo! Ya tienes en tu PC lo que subiste a GitHub.
 ---
 Generado con ❤️ para el análisis de conectividad en Colombia.
