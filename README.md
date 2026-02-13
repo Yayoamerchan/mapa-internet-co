@@ -74,4 +74,5 @@ git clone [URL]: Descargar el repositorio completo por primera vez.
 2.  Escribe: `git pull origin main`.
 3.  ¡Listo! Ya tienes en tu PC lo que subiste a GitHub.
 ---
+```
 Generado con ❤️ para el análisis de conectividad en Colombia.
