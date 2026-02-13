@@ -11,34 +11,17 @@
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet.photon.css">
-        
         <style>
-        html, body, #map { width: 100%; height: 100%; padding: 0; margin: 0; }
-        .map-title-card {
-            position: absolute; top: 12px; left: 55px; z-index: 1001; 
-            background: rgba(255, 255, 255, 0.9); padding: 5px 15px; border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3); border: 1px solid #1976D2; pointer-events: none;
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
         }
-        .map-title-card h2 { margin: 0; font-size: 16px; font-family: 'Segoe UI', sans-serif; color: #1976D2; text-transform: uppercase; }
-        #filtros-panel {
-            position: absolute; bottom: 20px; right: 10px; background: rgba(255, 255, 255, 0.95);
-            padding: 8px 12px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;
-            width: 190px; font-family: 'Segoe UI', sans-serif;
-        }
-        .filtro-categoria { margin: 1px 0; padding: 2px 4px; font-size: 10.5px; cursor: pointer; display: flex; align-items: center; }
-        #aplicar-filtros { width: 100%; padding: 5px; background: #1976D2; color: white; border: none; border-radius: 4px; margin-top: 6px; cursor: pointer; font-weight: bold; font-size: 11px; }
         </style>
-        
         <title></title>
     </head>
-    <body><div class="map-title-card"><h2>Análisis de Internet - CO</h2></div>
-            <div id="filtros-panel">
-                <h4>🔍 Filtro por Tamaño</h4>
-                <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="todos" checked> <b>MOSTRAR TODOS</b></label>
-                <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Pequeña">🟡 Pequeña</label>
-                <label class="filtro-categoria"><input type="checkbox" class="filtro-tamano" value="Micro">⚪ Micro</label>
-                <button id="aplicar-filtros">ACTUALIZAR VISTA</button>
-            </div>
+    <body>
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -52,7 +35,7 @@
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
         <script src="js/leaflet.photon.js"></script>
-        <script src="data/Simplificado_1.js"></script>
+        <script src="data/CantAccesosNet_1.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -153,7 +136,7 @@
         });
         layer_GoogleMaps_0;
         map.addLayer(layer_GoogleMaps_0);
-        function pop_Simplificado_1(feature, layer) {
+        function pop_CantAccesosNet_1(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
@@ -175,10 +158,10 @@
                         <td colspan="2">' + (feature.properties['Depto'] !== null ? autolinker.link(String(feature.properties['Depto']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['Mercado'] !== null ? autolinker.link(String(feature.properties['Mercado']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Plaza'] !== null ? autolinker.link(String(feature.properties['Plaza']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['Plaza'] !== null ? autolinker.link(String(feature.properties['Plaza']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Estrategia'] !== null ? autolinker.link(String(feature.properties['Estrategia']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Empresa_Lider</th>\
@@ -190,6 +173,9 @@
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['Vel_Down_Promedio'] !== null ? autolinker.link(String(feature.properties['Vel_Down_Promedio']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Tecnologia_Moda'] !== null ? autolinker.link(String(feature.properties['Tecnologia_Moda']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Num_Empresas</th>\
@@ -214,6 +200,27 @@
                         <th scope="row">Popup_HTML</th>\
                         <td>' + (feature.properties['Popup_HTML'] !== null ? autolinker.link(String(feature.properties['Popup_HTML']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Num_Gigante'] !== null ? autolinker.link(String(feature.properties['Num_Gigante']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Num_Grande'] !== null ? autolinker.link(String(feature.properties['Num_Grande']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Num_Mediana_Alta'] !== null ? autolinker.link(String(feature.properties['Num_Mediana_Alta']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Num_Mediana_Baja'] !== null ? autolinker.link(String(feature.properties['Num_Mediana_Baja']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Num_Micro'] !== null ? autolinker.link(String(feature.properties['Num_Micro']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Num_Muy_Grande'] !== null ? autolinker.link(String(feature.properties['Num_Muy_Grande']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Num_Pequeña'] !== null ? autolinker.link(String(feature.properties['Num_Pequeña']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -222,10 +229,10 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_Simplificado_1_0(feature) {
+        function style_CantAccesosNet_1_0(feature) {
             if (feature.properties['Accesos_Totales'] >= 4.000000 && feature.properties['Accesos_Totales'] <= 10.000000 ) {
                 return {
-                pane: 'pane_Simplificado_1',
+                pane: 'pane_CantAccesosNet_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.799)',
                 dashArray: '',
@@ -240,7 +247,7 @@
             }
             if (feature.properties['Accesos_Totales'] >= 10.000000 && feature.properties['Accesos_Totales'] <= 100.000000 ) {
                 return {
-                pane: 'pane_Simplificado_1',
+                pane: 'pane_CantAccesosNet_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.799)',
                 dashArray: '',
@@ -255,7 +262,7 @@
             }
             if (feature.properties['Accesos_Totales'] >= 100.000000 && feature.properties['Accesos_Totales'] <= 1000.000000 ) {
                 return {
-                pane: 'pane_Simplificado_1',
+                pane: 'pane_CantAccesosNet_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.799)',
                 dashArray: '',
@@ -270,7 +277,7 @@
             }
             if (feature.properties['Accesos_Totales'] >= 1000.000000 && feature.properties['Accesos_Totales'] <= 10000.000000 ) {
                 return {
-                pane: 'pane_Simplificado_1',
+                pane: 'pane_CantAccesosNet_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.799)',
                 dashArray: '',
@@ -285,7 +292,7 @@
             }
             if (feature.properties['Accesos_Totales'] >= 10000.000000 && feature.properties['Accesos_Totales'] <= 100000.000000 ) {
                 return {
-                pane: 'pane_Simplificado_1',
+                pane: 'pane_CantAccesosNet_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.799)',
                 dashArray: '',
@@ -300,7 +307,7 @@
             }
             if (feature.properties['Accesos_Totales'] >= 100000.000000 && feature.properties['Accesos_Totales'] <= 1000000.000000 ) {
                 return {
-                pane: 'pane_Simplificado_1',
+                pane: 'pane_CantAccesosNet_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.799)',
                 dashArray: '',
@@ -315,7 +322,7 @@
             }
             if (feature.properties['Accesos_Totales'] >= 1000000.000000 && feature.properties['Accesos_Totales'] <= 10000000.000000 ) {
                 return {
-                pane: 'pane_Simplificado_1',
+                pane: 'pane_CantAccesosNet_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.799)',
                 dashArray: '',
@@ -329,22 +336,22 @@
             }
             }
         }
-        map.createPane('pane_Simplificado_1');
-        map.getPane('pane_Simplificado_1').style.zIndex = 401;
-        map.getPane('pane_Simplificado_1').style['mix-blend-mode'] = 'normal';
-        var layer_Simplificado_1 = new L.geoJson(json_Simplificado_1, {
+        map.createPane('pane_CantAccesosNet_1');
+        map.getPane('pane_CantAccesosNet_1').style.zIndex = 401;
+        map.getPane('pane_CantAccesosNet_1').style['mix-blend-mode'] = 'normal';
+        var layer_CantAccesosNet_1 = new L.geoJson(json_CantAccesosNet_1, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Simplificado_1',
-            layerName: 'layer_Simplificado_1',
-            pane: 'pane_Simplificado_1',
-            onEachFeature: pop_Simplificado_1,
-            style: style_Simplificado_1_0,
+            dataVar: 'json_CantAccesosNet_1',
+            layerName: 'layer_CantAccesosNet_1',
+            pane: 'pane_CantAccesosNet_1',
+            onEachFeature: pop_CantAccesosNet_1,
+            style: style_CantAccesosNet_1_0,
         });
-        bounds_group.addLayer(layer_Simplificado_1);
-        map.addLayer(layer_Simplificado_1);
+        bounds_group.addLayer(layer_CantAccesosNet_1);
+        map.addLayer(layer_CantAccesosNet_1);
         var overlaysTree = [
-            {label: 'Simplificado<br /><table><tr><td style="text-align: center;"><img src="legend/Simplificado_1_01010.png" /></td><td>0 - 10^1</td></tr><tr><td style="text-align: center;"><img src="legend/Simplificado_1_1011021.png" /></td><td>10^1 - 10^2</td></tr><tr><td style="text-align: center;"><img src="legend/Simplificado_1_1021032.png" /></td><td>10^2 - 10^3</td></tr><tr><td style="text-align: center;"><img src="legend/Simplificado_1_1031043.png" /></td><td>10^3 - 10^4</td></tr><tr><td style="text-align: center;"><img src="legend/Simplificado_1_1041054.png" /></td><td>10^4 - 10^5</td></tr><tr><td style="text-align: center;"><img src="legend/Simplificado_1_1051065.png" /></td><td>10^5 - 10^6</td></tr><tr><td style="text-align: center;"><img src="legend/Simplificado_1_1061076.png" /></td><td>10^6 - 10^7</td></tr></table>', layer: layer_Simplificado_1},
+            {label: 'Cant. Accesos Net<br /><table><tr><td style="text-align: center;"><img src="legend/CantAccesosNet_1_01010.png" /></td><td>0 - 10^1</td></tr><tr><td style="text-align: center;"><img src="legend/CantAccesosNet_1_1011021.png" /></td><td>10^1 - 10^2</td></tr><tr><td style="text-align: center;"><img src="legend/CantAccesosNet_1_1021032.png" /></td><td>10^2 - 10^3</td></tr><tr><td style="text-align: center;"><img src="legend/CantAccesosNet_1_1031043.png" /></td><td>10^3 - 10^4</td></tr><tr><td style="text-align: center;"><img src="legend/CantAccesosNet_1_1041054.png" /></td><td>10^4 - 10^5</td></tr><tr><td style="text-align: center;"><img src="legend/CantAccesosNet_1_1051065.png" /></td><td>10^5 - 10^6</td></tr><tr><td style="text-align: center;"><img src="legend/CantAccesosNet_1_1061076.png" /></td><td>10^6 - 10^7</td></tr></table>', layer: layer_CantAccesosNet_1},
             {label: "Google Maps", layer: layer_GoogleMaps_0},]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
@@ -408,5 +415,143 @@
         });       
         setBounds();
         </script>        
-    </body>
+    
+        <style>
+            .map-title-card { position: absolute; top: 10px; left: 55px; z-index: 1001; background: white; padding: 8px 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); border: 1px solid #1976D2; pointer-events: none; }
+            .map-title-card h2 { margin: 0; font-size: 14px; color: #1976D2; font-family: sans-serif; text-transform: uppercase; }
+            #filtros-panel { position: absolute; bottom: 30px; right: 10px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.2); z-index: 1000; width: 210px; font-family: sans-serif; border: 1px solid #ccc; }
+            .filtro-item { display: flex; align-items: center; font-size: 11px; margin-bottom: 5px; cursor: pointer; }
+            #btn-aplicar { width: 100%; margin-top: 8px; cursor: pointer; background: #1976D2; color: white; border: none; padding: 7px; border-radius: 4px; font-weight: bold; }
+            #cant-mun { font-weight: bold; color: #1976D2; }
+            
+            /* --- DISEÑO DE POPUP OPTIMIZADO --- */
+            .leaflet-popup-content-wrapper { 
+                padding: 0; 
+                overflow: hidden; 
+                border-radius: 10px; 
+                width: 350px !important; /* Más ancho */
+            }
+            .leaflet-popup-content { 
+                margin: 0 !important; 
+                width: 350px !important; 
+            }
+            .popup-header { 
+                background: #1976D2; 
+                color: white; 
+                padding: 8px 15px; 
+                font-weight: bold; 
+                font-size: 14px; 
+                border-bottom: 2px solid #1565C0;
+            }
+            .popup-body { 
+                padding: 12px; 
+                font-size: 13px; 
+                line-height: 1.5; 
+                max-height: 350px; /* Más espacio para el scroll */
+                overflow-y: auto;  /* Habilita el scroll solo aquí */
+                color: #333;
+            }
+            /* Estilo tablas dentro del popup */
+            .popup-body table { width: 100%; border-collapse: collapse; }
+            .popup-body td { padding: 4px 0; border-bottom: 1px solid #eee; }
+        </style>
+
+        <div class="map-title-card"><h2>Análisis de Internet - Colombia</h2></div>
+        <div id="filtros-panel">
+            <h4 style="margin:0 0 10px 0; font-size:12px;">🔍 Filtro por Tamaño</h4>
+            <label class="filtro-item"><input type="checkbox" class="chk-t" value="todos" checked> <b>MOSTRAR TODOS</b></label>
+            <label class="filtro-item"><input type="checkbox" class="chk-t" value="Gigante"> 🔴 Gigante</label>
+            <label class="filtro-item"><input type="checkbox" class="chk-t" value="Muy_Grande"> 🟠 Muy Grande</label>
+            <label class="filtro-item"><input type="checkbox" class="chk-t" value="Grande"> 🟠 Grande</label>
+            <label class="filtro-item"><input type="checkbox" class="chk-t" value="Mediana_Alta"> 🟢 Mediana Alta</label>
+            <label class="filtro-item"><input type="checkbox" class="chk-t" value="Mediana_Baja"> 🟢 Mediana Baja</label>
+            <label class="filtro-item"><input type="checkbox" class="chk-t" value="Pequeña"> 🟡 Pequeña</label>
+            <label class="filtro-item"><input type="checkbox" class="chk-t" value="Micro"> ⚪ Micro</label>
+            <button id="btn-aplicar">ACTUALIZAR VISTA</button>
+            <div style="font-size:10px; margin-top:8px; text-align:center;">Municipios: <span id="cant-mun">0</span></div>
+        </div>
+
+        <script id="mejora-script">
+        function inicializarTodo() {
+            var capa = window['layer_CantAccesosNet_1'];
+            if (!capa) { setTimeout(inicializarTodo, 500); return; }
+
+            // RECONSTRUIR POPUPS
+            capa.eachLayer(function(l) {
+                var p = l.feature.properties;
+                var nombre = p['MpNombre'] || "Municipio";
+                var htmlContent = p['Popup_HTML'] || "Sin datos";
+                
+                // Creamos estructura limpia
+                var container = document.createElement('div');
+                container.innerHTML = `<div class="popup-header">${nombre}</div><div class="popup-body">${htmlContent}</div>`;
+                
+                l.bindPopup(container, { 
+                    maxWidth: 350, 
+                    minWidth: 350,
+                    className: 'custom-popup-frame'
+                });
+                
+                l.on('mouseover', function(e) {
+                    if (this.options.interactive) {
+                        this.setStyle({ color: 'yellow', weight: 4, fillOpacity: 0.9 });
+                    }
+                });
+                l.on('mouseout', function(e) {
+                    capa.resetStyle(this);
+                });
+            });
+
+            function ejecutarFiltro() {
+                var seleccionados = Array.from(document.querySelectorAll('.chk-t:checked')).map(c => c.value);
+                var verTodos = seleccionados.includes('todos');
+                var contador = 0;
+
+                capa.eachLayer(function(l) {
+                    var p = l.feature.properties;
+                    var mostrar = verTodos;
+
+                    if (!verTodos) {
+                        seleccionados.forEach(v => {
+                            if (p['Num_' + v] > 0 || p[v] > 0 || p[v] === v) mostrar = true;
+                        });
+                    }
+
+                    if (mostrar) {
+                        l.setStyle({ fillOpacity: 0.7, opacity: 1, stroke: true });
+                        l.options.interactive = true;
+                        if (l.getElement()) {
+                            l.getElement().style.display = 'block';
+                            l.getElement().style.pointerEvents = 'auto';
+                        }
+                        contador++;
+                    } else {
+                        l.setStyle({ fillOpacity: 0, opacity: 0, stroke: false });
+                        l.options.interactive = false;
+                        if (l.getElement()) {
+                            l.getElement().style.display = 'none';
+                            l.getElement().style.pointerEvents = 'none';
+                        }
+                    }
+                });
+                document.getElementById('cant-mun').innerText = contador;
+            }
+
+            document.getElementById('btn-aplicar').onclick = ejecutarFiltro;
+            
+            document.querySelectorAll('.chk-t').forEach(i => {
+                i.onchange = function() {
+                    if(this.value === 'todos' && this.checked) {
+                        document.querySelectorAll('.chk-t').forEach(c => { if(c.value !== 'todos') c.checked = false; });
+                    } else if(this.checked) {
+                        document.querySelector('.chk-t[value="todos"]').checked = false;
+                    }
+                };
+            });
+
+            ejecutarFiltro();
+        }
+        window.addEventListener('load', function() { setTimeout(inicializarTodo, 1000); });
+        </script>
+        </body>
 </html>
